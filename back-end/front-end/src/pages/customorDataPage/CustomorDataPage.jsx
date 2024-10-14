@@ -40,6 +40,7 @@ function CustomorDataPage({ title, get_status, put_status }) {
 
   // 회사 필터 상태 --------------------------------------------
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false); // 회사 필터 열림/닫힘 상태
+  const [newCompany, setNewCompany] = useState("");
 
   const closeCompanyDropdown = () => {
     if (isCompanyDropdownOpen) {
@@ -66,7 +67,7 @@ function CustomorDataPage({ title, get_status, put_status }) {
 
   useEffect(() => {
     fetchData(filters); // currentPage가 변경될 때마다 데이터 가져오기
-  }, [currentPage, filters, checkedCompanies, customDateRange]);
+  }, [currentPage, filters, checkedCompanies, customDateRange, newCompany]);
 
   const fetchData = async (filters = {}) => {
     setLoading(true);
@@ -94,6 +95,7 @@ function CustomorDataPage({ title, get_status, put_status }) {
         page: currentPage,
         limit,
         advertising_company_ids: checkedCompanies,
+        newCompany: newCompany && newCompany,
         startDate: startDate, // 날짜 필터 변환된 형식
         endDate: endDate, // 날짜 필터 변환된 형식
         ...filters,
@@ -290,8 +292,11 @@ function CustomorDataPage({ title, get_status, put_status }) {
                 return (
                   <StatCard
                     key={company.id}
+                    id={company.id}
                     label={company.name}
                     value={value}
+                    newCompany={newCompany}
+                    setNewCompany={setNewCompany}
                   />
                 );
               }

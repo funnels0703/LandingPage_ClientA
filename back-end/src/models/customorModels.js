@@ -5,13 +5,17 @@ const prisma = new PrismaClient();
 const getFilteredCustomors = async (filters, offset = 0, limit = 10) => {
   const {
     advertising_company_ids,
+    newCompany, // newCompany 추가
     startDate,
     endDate,
     url_code,
     selected_hospital_id, // 병원 ID 필터 추가
   } = filters;
 
-  const companyIds = advertising_company_ids
+  // newCompany가 있을 경우 advertising_company_ids에 newCompany 사용
+  const companyIds = newCompany
+    ? [parseInt(newCompany, 10)] // newCompany는 정수로 변환
+    : advertising_company_ids
     ? advertising_company_ids
         .split(",")
         .map(Number)
