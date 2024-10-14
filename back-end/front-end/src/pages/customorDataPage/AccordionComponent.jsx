@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-function AccordionComponent({ recentSettings }) {
+function AccordionComponent({ recentSettings, setUrlCodeId }) {
   const [isOpen, setIsOpen] = useState(false); // 기본적으로 닫혀있는 상태
 
   const toggleAccordion = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleCardClick = (id) => {
+    setUrlCodeId(id); // 선택된 매체의 ID를 설정
   };
 
   return (
@@ -21,8 +25,12 @@ function AccordionComponent({ recentSettings }) {
       <div className={`accordion-content ${isOpen ? "open" : ""}`}>
         <div className="card-container">
           {recentSettings &&
-            recentSettings.map((setting, index) => (
-              <div className="card" key={setting.id}>
+            recentSettings.map((setting) => (
+              <div
+                className="card"
+                key={setting.id}
+                onClick={() => handleCardClick(setting.id)} // 카드 클릭 시 ID 설정
+              >
                 <div className="card-title">{setting.ad_title}</div>
                 <div className="card-count">DB 수 총 {setting.count}개</div>
               </div>

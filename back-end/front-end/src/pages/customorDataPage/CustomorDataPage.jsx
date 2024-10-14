@@ -48,6 +48,8 @@ function CustomorDataPage({ title, get_status, put_status }) {
     }
   };
 
+  // urlCodeTitleID 별 필터 (아코디언의 버튼 클릭 시)
+  const [urlCodeId, setUrlCodeId] = useState();
   // filters 상태를 CustomorDataPage에서 관리
   const [filters, setFilters] = useState({
     url_code: "",
@@ -98,6 +100,7 @@ function CustomorDataPage({ title, get_status, put_status }) {
         newCompany: newCompany && newCompany,
         startDate: startDate, // 날짜 필터 변환된 형식
         endDate: endDate, // 날짜 필터 변환된 형식
+        urlCodeId: urlCodeId, // urlCodeId 추가
         ...filters,
       });
 
@@ -305,7 +308,10 @@ function CustomorDataPage({ title, get_status, put_status }) {
         </div>
       </div>
       <div className="recent-settings" onClick={closeCompanyDropdown}>
-        <AccordionComponent recentSettings={recentSettings} />
+        <AccordionComponent
+          recentSettings={recentSettings}
+          setUrlCodeId={setUrlCodeId}
+        />
       </div>
       {/* 삭제 버튼 */}
       <div className="button-group" onClick={closeCompanyDropdown}>

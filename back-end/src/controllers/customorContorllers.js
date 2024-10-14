@@ -40,7 +40,7 @@ const fetchFilteredCustomorData = async (req, res) => {
     });
 
     // 최신 url_code_setting 데이터 10개 가져오기
-    const recentSettings = await getRecentUrlCodeSettings();
+    const recentSettings = await getRecentUrlCodeSettings(filters);
 
     // 각 setting id에 대한 customor_db 데이터 카운트
     const counts = await Promise.all(

@@ -318,18 +318,55 @@ const deleteCustomors = async (ids) => {
 };
 
 // url_code_setting의 최신 5개 데이터 가져오기
-const getRecentUrlCodeSettings = async () => {
-  return await prisma.url_code_setting.findMany({
-    take: 8,
-    orderBy: {
-      created_at: "desc",
-    },
-    select: {
-      id: true,
-      ad_title: true,
-    },
-  });
+const getRecentUrlCodeSettings = async (filters) => {
+  const {
+    startDate,
+    endDate,
+    selected_hospital_id, // 병원 ID 필터
+    advertising_company_ids, // 매체 필터
+  } = filters;
+
+  try {
+    return await prisma.url_code_setting.findMany({
+      take: 8,
+      orderBy: {
+        created_at: "desc",
+      },
+      where: {
+        AND: [
+          selected_hospital_id
+            ? { hospital_name_id: selected_hospital_id }
+            : {}, // 병원 ID 필터 적용
+          advertising_company_ids && advertising_company_ids.length > 0
+            ? {
+                advertising_company_id: {
+                  in: advertising_company_ids
+                    .split(",")
+                    .map(Number)
+                    .filter((id) => !isNaN(id)), // 매체 ID 필터 적용
+                },
+              }
+            : {}, // 매체 ID 필터 적용
+          {
+            created_at: {
+              gte: startDate ? new Date(startDate) : undefined,
+              lte: endDate ? new Date(endDate) : undefined,
+            },
+          },
+        ],
+      },
+      select: {
+        id: true,
+        ad_title: true,
+        hospital_name_id: true, // 병원 ID도 선택적으로 가져올 수 있습니다.
+      },
+    });
+  } catch (error) {
+    console.error("Error fetching recent URL code settings:", error);
+    throw error;
+  }
 };
+
 // customor_db에서 특정 url_code_setting_id에 대한 데이터 수 카운트
 const countCustomorBySettingId = async (settingId) => {
   return await prisma.customor_db.count({
