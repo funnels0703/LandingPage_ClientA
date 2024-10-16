@@ -2,7 +2,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import A001 from "./pages/001/001.jsx";
+import A001 from "./pages/001/A001.jsx";
 
 function App() {
   return (

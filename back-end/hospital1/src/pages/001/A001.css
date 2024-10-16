@@ -1,0 +1,7 @@
+.A001 {
+  width: 100vw;
+}
+.A001 img {
+  width: 100%;
+  object-fit: cover;
+}
