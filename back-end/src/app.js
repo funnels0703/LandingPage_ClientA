@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cors = require("cors");
-const urlCodeRoutes = require("./routes/urlCodeRoutes");
+const randingRoutes = require("./routes/randingRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -23,20 +23,34 @@ const staticHospital4 = express.static(
   path.join(__dirname, "../hospital4/build")
 );
 
+app.use("/api", randingRoutes);
+
 app.use((req, res, next) => {
   const host = req.headers.host;
 
   if (host.endsWith("bkmzfq.com")) {
     req.staticPath = path.join(__dirname, "../hospital1/build/index.html");
+    // console.log(1);
     return staticHospital1(req, res, next);
-  } else if (host.endsWith("dbgemstone.com")) {
+  }
+  // 테스트
+  else if (host.endsWith("localhost:5000")) {
+    req.staticPath = path.join(__dirname, "../hospital1/build/index.html");
+    // console.log(1);
+    return staticHospital1(req, res, next);
+  }
+  // 테스트
+  else if (host.endsWith("dbgemstone.com")) {
     req.staticPath = path.join(__dirname, "../hospital2/build/index.html");
+    // console.log(2);
     return staticHospital2(req, res, next);
   } else if (host.endsWith("ccc.com")) {
     req.staticPath = path.join(__dirname, "../hospital3/build/index.html");
+    // console.log(3);
     return staticHospital3(req, res, next);
   } else if (host.endsWith("ddd.com")) {
     req.staticPath = path.join(__dirname, "../hospital4/build/index.html");
+    // console.log(4);
     return staticHospital4(req, res, next);
   }
   next();
@@ -50,6 +64,5 @@ app.get("*", (req, res) => {
 });
 
 // Specific route for your API
-app.use("/api", urlCodeRoutes);
 
 module.exports = app;

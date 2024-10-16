@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/login" element={<A001 />} />
+          <Route path="/:adnumber/:urlCode" element={<A001 />} />
         </Routes>
       </Router>
     </div>
