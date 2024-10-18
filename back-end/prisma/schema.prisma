@@ -22,8 +22,6 @@ model click {
   id       Int     @id @default(autoincrement())
   url_code String? @db.VarChar(255)
   ip       String? @db.VarChar(255)
-
-  @@unique([url_code, ip], map: "url_code_ip")
 }
 
 model customor_db {
@@ -45,7 +43,6 @@ model customor_db {
   url_code_setting_customor_db_url_code_setting_idTourl_code_setting url_code_setting? @relation("customor_db_url_code_setting_idTourl_code_setting", fields: [url_code_setting_id], references: [id], map: "fk_customor_url_code_setting")
   url_code_setting_customor_db_url_codeTourl_code_setting            url_code_setting? @relation("customor_db_url_codeTourl_code_setting", fields: [url_code], references: [url_code], onDelete: NoAction, onUpdate: NoAction, map: "fk_url_code")
 
-  @@unique([phone, url_code], map: "phone_url_code_unique")
   @@index([url_code_setting_id], map: "fk_customor_url_code_setting")
   @@index([url_code], map: "fk_url_code")
 }

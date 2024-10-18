@@ -65,27 +65,47 @@ const createCustomer = async (req, res) => {
     (req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
     req.connection.remoteAddress;
 
-  try {
-    const isoDate = new Date(date).toISOString(); // 날짜를 ISO 형식으로 변환
+  const id = parseInt(urlCodeSettingId);
+  const isoDate = new Date(date).toISOString(); // 날짜를 ISO 형식으로 변환
 
-    const newCustomer = await prisma.customor_db.create({
-      data: {
-        name: name,
-        phone: phoneNumber,
-        date: isoDate,
-        url_code: urlCode,
-        url_code_setting_id: parseInt(urlCodeSettingId),
-        ip: ip, // IP 주소를 데이터베이스에 저장
-      },
-    });
+  console.log(id);
+  try {
+    // 트랜잭션 시작
+    const result = await prisma.$transaction([
+      prisma.customor_db.create({
+        data: {
+          name: name,
+          phone: phoneNumber,
+          date: isoDate,
+          url_code: urlCode,
+          url_code_setting_id: id,
+          ip: ip, // IP 주소를 데이터베이스에 저장
+        },
+      }),
+      prisma.url_code_setting.update({
+        where: { id: id },
+        data: {
+          db_request_count: {
+            increment: 1,
+          },
+        },
+      }),
+    ]);
 
     res.status(201).json({
-      message: "Customer created successfully",
-      customer: newCustomer,
+      message: "Customer created and request count incremented successfully",
+      customer: result[0], // 고객 생성 결과
+      requestCountUpdate: result[1], // 요청 카운트 업데이트 결과
     });
   } catch (error) {
-    console.error("Error creating customer:", error);
-    res.status(500).send("Failed to create customer");
+    console.error(
+      "Error in creating customer and incrementing request count:",
+      error
+    );
+    res.status(500).json({
+      message: "Failed to create customer and increment request count",
+      error: error,
+    });
   }
 };
 

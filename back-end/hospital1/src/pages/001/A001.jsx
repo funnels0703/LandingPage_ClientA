@@ -47,7 +47,8 @@ function A001() {
     if (!isLoading) {
       const timer = setTimeout(() => {
         incrementClickCount();
-      }, 3000);
+      }, 500);
+      // }, 3000); 3초
 
       return () => clearTimeout(timer);
     }

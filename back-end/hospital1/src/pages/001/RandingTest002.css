@@ -1,35 +1,62 @@
 .form-container {
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #f8f8f8;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 .form-container h2 {
-  margin: 20px 0;
+  color: #333; /* 제목 색상 */
+  margin-bottom: 15px;
 }
-.input-field {
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
+  margin-bottom: 20px;
+}
+
+.image-container img {
+  width: 90%; /* 이미지의 너비를 조정 */
+  margin-bottom: 10px; /* 이미지 간 간격 */
+  border-radius: 8px; /* 이미지 모서리 둥글게 */
+}
+
+.input-field {
+  width: 90%; /* 입력 필드 너비 조정 */
   padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
+  margin: 10px 0;
   border: 1px solid #ccc;
-  box-sizing: border-box; /* Box sizing to make sure padding doesn't affect width */
+  border-radius: 2px;
+  outline: none;
+}
+.input-ptionBottom {
+  margin-bottom: 40px;
+}
+
+.random-button {
+  padding: 10px 20px;
+  background-color: #4caf50; /* 진한 녹색 배경 */
+  color: white; /* 흰색 텍스트 */
+  font-size: 16px; /* 글자 크기 */
+  border: none; /* 테두리 없음 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  cursor: pointer; /* 마우스 오버 시 포인터 커서 */
+  margin-bottom: 10px; /* 버튼 아래 여백 */
+  transition: background-color 0.3s ease; /* 배경색 변경 애니메이션 */
+}
+
+.random-button:hover {
+  background-color: #45a049; /* 호버 시 색상 변경 */
 }
 
 .submit-button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  color: white;
+  padding: 10px 20px;
+  background-color: #007bff; /* 파란색 배경 */
+  color: white; /* 흰색 글자 */
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
+  width: 80%;
+  margin-top: 10px;
 }
