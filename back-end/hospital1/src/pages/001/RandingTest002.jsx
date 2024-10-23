@@ -146,7 +146,12 @@ function RandingTest002({ urlCode, urlCodeSettingId }) {
           src={`${process.env.PUBLIC_URL}/images/001/091104.jpg`}
           alt="네번째 이미지"
         />
-        <button onClick={generateRandomData} className="random-button">
+
+        {/* 자동 테스트 버튼 추가 */}
+        <button onClick={handleAutoTest} className="auto-test-button">
+          자동 테스트
+        </button>
+        {/* <button onClick={generateRandomData} className="random-button">
           자동 생성
         </button>
 
@@ -168,18 +173,13 @@ function RandingTest002({ urlCode, urlCodeSettingId }) {
           onClick={handleFormSubmit}
           src={`${process.env.PUBLIC_URL}/images/001/091105.png`}
           alt="다섯번째 이미지"
-        />
+        /> */}
 
         <img
           src={`${process.env.PUBLIC_URL}/images/001/091106.jpg`}
           alt="여섯번째 이미지"
         />
       </div>
-
-      {/* 자동 테스트 버튼 추가 */}
-      <button onClick={handleAutoTest} className="auto-test-button">
-        자동 테스트
-      </button>
     </div>
   );
 }
